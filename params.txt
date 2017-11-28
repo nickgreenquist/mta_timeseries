@@ -6,14 +6,26 @@ Segment 500004_500005
 
 Segment 500008_500009
 0 Diff: p=27, q=12
-
+1 Diff: p=1, q=0 or q=11
+2 Diff:
+3 Diff:
 
 Segement 500081_505233
-
+0 Diff: p=27, q=12
+1 Diff:
+2 Diff:
+3 Diff:
 
 
 Segment 500081_505233
-
+0 Diff: p=27, q=12
+1 Diff:
+2 Diff:
+3 Diff:
 
 
 Segment 505238_503996
+0 Diff: p=27, q=12
+1 Diff:
+2 Diff:
+3 Diff:

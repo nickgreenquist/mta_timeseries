@@ -50,6 +50,30 @@ def evaluate_models(dataset, p_values, d_values, q_values):
 					continue
 	print('Best ARIMA%s MSE=%.3f' % (best_cfg, best_score))
 
+def fit_models(dataset, p_values, d_values, q_values):
+	best_score, best_cfg = float("inf"), None
+	for p in p_values:
+		for d in d_values:
+			for q in q_values:
+				order = (p,d,q)
+				try:
+					print("\n\n\n\n")
+					print(order)
+					model = ARIMA(series, order=order)
+					model_fit = model.fit()
+					print(model_fit.summary())
+
+				except:
+					continue
+
+	# plot residual errors
+	'''residuals = pd.DataFrame(model_fit.resid)
+	residuals.plot()
+	pyplot.show()
+	residuals.plot(kind='kde')
+	pyplot.show()
+	print(residuals.describe())'''
+
 def parser(x):
 	return datetime.fromtimestamp(int(x))
 
@@ -62,25 +86,16 @@ series.loc[series.AvgSpeed>35,'AvgSpeed']=np.nan
 series.fillna(mean, inplace=True)
 series.fillna(series.mean(axis=0))
 
-'''# GRID SEARCH
+# GRID SEARCH
 p_values = [0, 1, 2]
 d_values = [0,1,2]
 q_values = [0,1,2]
+#evaluate_models(series, p_values, d_values, q_values)'''
 
-evaluate_models(series, p_values, d_values, q_values)'''
+evaluate_arima_model(series, (0,2,1))
 
-#create an ARIMA model using the above orders
+'''#create an ARIMA model using the above orders
 dataset = series.astype('float32')
-evaluate_arima_model(series, (1, 1, 12))
+evaluate_arima_model(series, (1, 1, 12))'''
 
-'''model = ARIMA(series, order=(31,0,12))
-model_fit = model.fit()
-print(model_fit.summary())
-
-# plot residual errors
-residuals = pd.DataFrame(model_fit.resid)
-residuals.plot()
-pyplot.show()
-residuals.plot(kind='kde')
-pyplot.show()
-print(residuals.describe())'''
+#fit_models(series, p_values, d_values, q_values)
