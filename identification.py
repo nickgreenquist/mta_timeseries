@@ -10,16 +10,21 @@ from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 def parser(x):
 	return datetime.fromtimestamp(int(x))
 
-series = read_csv('input/505238_503996.csv', header=None, parse_dates=[0], date_parser=parser, delimiter=',',names=['DateTime','AvgSpeed'])
+series = read_csv('input/500004_500005.csv', header=None, parse_dates=[0], date_parser=parser, delimiter=',',names=['DateTime','AvgSpeed'])
 series = series.set_index('DateTime')
 
 #remove nans and outliers
-mean=series.loc[series['AvgSpeed']<=35,'AvgSpeed'].mean()
+mean = series.loc[series['AvgSpeed']<=35,'AvgSpeed'].mean()
 series.loc[series.AvgSpeed>35,'AvgSpeed']=np.nan
 series.fillna(mean, inplace=True)
 series.fillna(series.mean(axis=0))
 
-for i in range(3):
+# seasonal difference
+series = series.diff(144)
+# trim off the first year of empty data
+series = series[144:]
+
+for i in range(1):
       #plot ACF and PACF
     series.plot()
     pyplot.title(str(i) + ' Diff')

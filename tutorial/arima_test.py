@@ -10,7 +10,7 @@ from statsmodels.tsa import arima_model, ar_model
 def parser(x):
 	return datetime.strptime('190'+x, '%Y-%m')
 
-series = read_csv('input/shampoo-sales.csv', header=0, parse_dates=[0], index_col=0, squeeze=True, date_parser=parser)
+series = read_csv('../input/shampoo-sales.csv', header=0, parse_dates=[0], index_col=0, squeeze=True, date_parser=parser)
 
 #determine best model to use
 '''series_diff = series.diff()[1:]
