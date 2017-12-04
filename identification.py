@@ -10,7 +10,7 @@ from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 def parser(x):
 	return datetime.fromtimestamp(int(x))
 
-series = read_csv('input/500004_500005.csv', header=None, parse_dates=[0], date_parser=parser, delimiter=',',names=['DateTime','AvgSpeed'])
+series = read_csv('input/505238_503996.csv', header=None, parse_dates=[0], date_parser=parser, delimiter=',',names=['DateTime','AvgSpeed'])
 series = series.set_index('DateTime')
 
 #remove nans and outliers
@@ -20,11 +20,11 @@ series.fillna(mean, inplace=True)
 series.fillna(series.mean(axis=0))
 
 # seasonal difference
-series = series.diff(144)
+#series = series.diff(144)
 # trim off the first year of empty data
-series = series[144:]
+series = series[:145]
 
-for i in range(1):
+for i in range(2):
       #plot ACF and PACF
     series.plot()
     pyplot.title(str(i) + ' Diff')
@@ -33,15 +33,11 @@ for i in range(1):
     '''autocorrelation_plot(series)
     pyplot.show()'''
 
-    plot_acf(series).show()
+    plot_acf(series, lags=140).show()
     pyplot.title(str(i) + ' Diff ACF')
     pyplot.show()
 
-    plot_acf(series, lags=50).show()
-    pyplot.title(str(i) + ' Diff ACF Lag50')
-    pyplot.show()
-
-    plot_pacf(series, lags=50).show()
+    plot_pacf(series, lags=140).show()
     pyplot.title(str(i) + ' Diff PACF')
     pyplot.show()
 
