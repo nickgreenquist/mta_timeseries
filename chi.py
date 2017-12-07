@@ -28,7 +28,7 @@ if __name__ == "__main__":
     residuals = []
 
     for r in resid:
-	residuals.append(r[1])
+	    residuals.append(r[1])
 
     vec = Vectors.dense(residuals)
 
